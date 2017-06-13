@@ -71,7 +71,6 @@ public class LoginRequest {
 
     public interface LoginActivityListener {
         void onLoginSuccessful(JSONObject response);
-
         void onError(VolleyError error);
     }
 }

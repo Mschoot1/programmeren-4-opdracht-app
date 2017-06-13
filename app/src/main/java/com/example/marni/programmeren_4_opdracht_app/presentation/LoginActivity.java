@@ -1,5 +1,8 @@
 package com.example.marni.programmeren_4_opdracht_app.presentation;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +45,27 @@ public class LoginActivity extends AppCompatActivity implements LoginRequest.Log
 
     @Override
     public void onLoginSuccessful(JSONObject response) {
+        try {
+            String token = response.getString("token");
+
+            Context context = getApplicationContext();
+            SharedPreferences prefs = context.getSharedPreferences(
+                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(getString(R.string.token), token);
+            editor.apply();
+
+            Log.i(tag, "token: " + prefs.getString(getString(R.string.token), ""));
+
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+
+            finish();
+
+        } catch (JSONException e) {
+            Log.e(tag, e.getMessage());
+        }
+
         Toast.makeText(this, "Hello success!", Toast.LENGTH_SHORT).show();
     }
 
