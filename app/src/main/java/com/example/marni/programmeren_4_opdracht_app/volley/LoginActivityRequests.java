@@ -86,15 +86,7 @@ public class LoginActivityRequests {
                     public void onErrorResponse(VolleyError error) {
                         listener.onRegisterError(error);
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
-            }
-        };
+                });
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
                 1500, // SOCKET_TIMEOUT_MS,
                 2, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES,

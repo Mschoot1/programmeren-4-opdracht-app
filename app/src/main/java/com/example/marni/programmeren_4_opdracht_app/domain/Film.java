@@ -15,13 +15,7 @@ public class Film {
 	private String rating;
 	private String specialFeatures;
 	private String lastUpdate;
-	
-	public Film(String title, String description, int releaseYear) {
-		this.title = title;
-		this.description = description;
-		this.releaseYear = releaseYear;
-	}
-	
+
 	public int getFilmId() {
 		return filmId;
 	}
@@ -124,12 +118,5 @@ public class Film {
 	
 	public void setLastUpdate(String lastUpdate) {
 		this.lastUpdate = lastUpdate;
-	}
-	
-	@Override
-	public String toString() {
-		return "Titel: " + title + '\n' +
-				"Beschrijving: " + description + '\n' +
-				"Jaar: " + releaseYear;
 	}
 }
