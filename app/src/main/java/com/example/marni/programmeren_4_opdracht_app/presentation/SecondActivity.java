@@ -15,11 +15,29 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity implements FilmsActivityRequests.LoginActivityListener {
+
+    private final String tag = getClass().getSimpleName();
+
+    private List<Film> films = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        FilmsActivityRequests requests = new FilmsActivityRequests(getApplicationContext(), this);
+        requests.handleGetFilms(0, 10);
+    }
+
+    @Override
+    public void onSuccessfulGetFilms(JSONObject response) {
+        Log.i(tag, "response: " + response);
+        films = FilmMapper.mapToDoList(response);
+    }
+
+    @Override
+    public void onGetFilmsError(VolleyError error) {
+        Log.e(tag, "onGetFilmsError " + error.toString());
     }
 }
