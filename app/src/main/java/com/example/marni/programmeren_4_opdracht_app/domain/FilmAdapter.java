@@ -1,4 +1,4 @@
-package com.example.marni.programmeren_4_opdracht_app.adapter;
+package com.example.marni.programmeren_4_opdracht_app.domain;
 
 import android.content.Context;
 import android.util.Log;
