@@ -9,35 +9,32 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
-import com.example.marni.programmeren_4_opdracht_app.domain.Film;
 
 import java.util.ArrayList;
 
 public class FilmAdapter extends BaseAdapter {
 	
-	private final String TAG = this.getClass().getSimpleName();
+	private final String tag = this.getClass().getSimpleName();
 	
 	private Context mContext;
-	private LayoutInflater mInflator;
-	private ArrayList<Film> filmArrayList;
+	private LayoutInflater mInflater;
+	private ArrayList<Film> films;
 	
-	public FilmAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Film> filmArrayList) {
+	public FilmAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Film> films) {
 		this.mContext = context;
-		this.mInflator = layoutInflater;
-		this.filmArrayList = filmArrayList;
+		this.mInflater = layoutInflater;
+		this.films = films;
 	}
 	
 	@Override
 	public int getCount() {
-		int size = filmArrayList.size();
-		Log.i(TAG, "getCount() = " + size);
-		return size;
+		return films.size();
 	}
 	
 	@Override
 	public Object getItem(int position) {
-		Log.i(TAG, "getItem() at " + position);
-		return filmArrayList.get(position);
+		Log.i(tag, "getItem() at " + position);
+		return films.get(position);
 	}
 	
 	@Override
@@ -47,45 +44,44 @@ public class FilmAdapter extends BaseAdapter {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.i(TAG, "getView at " + position);
-		
+		Log.i(tag, "getView at " + position);
 		ViewHolder viewHolder;
-		
 		if(convertView == null){
 			
-			Log.i(TAG, "convertView is NULL - nieuwe maken");
-			
-			// Koppel de convertView aan de layout van onze eigen row
-			convertView = mInflator.inflate(R.layout.film_listview_row, null);
-			
-			// Maak een ViewHolder en koppel de schermvelden aan de velden uit onze eigen row.
+			Log.i(tag, "convertView is NULL - nieuwe maken");
+			convertView = mInflater.inflate(R.layout.film_listview_row, null);
+
 			viewHolder = new ViewHolder();
-			viewHolder.textViewFilmId = (TextView) convertView.findViewById(R.id.film_id_tv);
-			viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.film_title_tv);
-			viewHolder.textViewReleaseYear = (TextView) convertView.findViewById(R.id.film_release_year_tv);
-			viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.film_description_tv);
+			viewHolder.textViewFilmId = (TextView) convertView.findViewById(R.id.tvFilmId);
+			viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.tvFilmTitle);
+			viewHolder.textViewReleaseYear = (TextView) convertView.findViewById(R.id.tvFilmReleaseYear);
+			viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.tvFilmDescription);
 			
-			// Sla de viewholder op in de convertView
 			convertView.setTag(viewHolder);
 		} else {
-			Log.i(TAG, "convertView BESTOND AL - hergebruik");
+			Log.i(tag, "convertView BESTOND AL - hergebruik");
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		
-		Film film = filmArrayList.get(position);
-		viewHolder.textViewFilmId.setText(film.getFilmId());
-		viewHolder.textViewTitle.setText(film.getTitle());
-		viewHolder.textViewReleaseYear.setText(film.getReleaseYear());
-		viewHolder.textViewDescription.setText(film.getDescription());
+		Film film = films.get(position);
+
+		String filmId = Integer.toString(film.getFilmId());
+		String title = film.getTitle();
+		String releaseYear = Integer.toString(film.getReleaseYear());
+		String description = film.getDescription();
+
+		viewHolder.textViewFilmId.setText(filmId);
+		viewHolder.textViewTitle.setText(title);
+		viewHolder.textViewReleaseYear.setText(releaseYear);
+		viewHolder.textViewDescription.setText(description);
 		
 		return convertView;
 	}
 	
 	private static class ViewHolder {
-		public TextView textViewFilmId;
-		public TextView textViewTitle;
-		public TextView textViewReleaseYear;
-		public TextView textViewDescription;
-		// public TextView textViewContents;
+		TextView textViewFilmId;
+		TextView textViewTitle;
+		TextView textViewReleaseYear;
+		TextView textViewDescription;
 	}
 }

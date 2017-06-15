@@ -1,6 +1,8 @@
 package com.example.marni.programmeren_4_opdracht_app.domain;
 
-public class Film {
+import java.io.Serializable;
+
+public class Film implements Serializable {
 	
 	private int filmId;
 	private String title;

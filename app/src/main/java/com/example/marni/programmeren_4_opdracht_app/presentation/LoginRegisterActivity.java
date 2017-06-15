@@ -50,7 +50,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginAct
             editor.putString(getString(R.string.token), token);
             editor.apply();
 
-            Intent intent = new Intent(context, SecondActivity.class);
+            Intent intent = new Intent(context, FilmsActivity.class);
             startActivity(intent);
 
             finish();
