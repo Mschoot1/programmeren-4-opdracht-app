@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.marni.programmeren_4_opdracht_app.presentation.LoginActivity">
+    tools:context="com.example.marni.programmeren_4_opdracht_app.presentation.LoginRegisterActivity">
 
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,14 +14,14 @@
         android:layout_marginEnd="@dimen/etMargin"
         android:layout_marginStart="@dimen/etMargin"
         android:layout_marginTop="?attr/actionBarSize"
-        android:hint="@string/username"
-        android:inputType="text" />
+        android:hint="@string/email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etUsername"
+        android:layout_below="@+id/etEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="@dimen/etMargin"
         android:layout_marginStart="@dimen/etMargin"
