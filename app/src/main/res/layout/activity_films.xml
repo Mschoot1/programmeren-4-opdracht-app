@@ -5,13 +5,24 @@
     android:layout_height="match_parent"
     tools:context="com.example.marni.programmeren_4_opdracht_app.presentation.FilmsActivity">
 
+    <include
+        android:id="@+id/toolbar_include"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
     <ListView
         android:id="@+id/lvFilms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:overScrollMode="never" />
+        android:overScrollMode="never"
+        android:layout_below="@+id/toolbar_include" />
+
+    <include
+        layout="@layout/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_include" />
 
 </RelativeLayout>

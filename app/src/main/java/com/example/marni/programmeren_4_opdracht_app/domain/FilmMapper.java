@@ -7,23 +7,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FilmMapper {
 
-    private static final String RESULT = "result";
+    static final String RESULT = "result";
     private static final String FILM_ID = "film_id";
     private static final String TITLE = "title";
     private static final String RELEASE_YEAR = "release_year";
     private static final String DESCRIPTION = "description";
 
-    public static ArrayList<Film> mapFilmList(JSONObject response){
+    public static ArrayList<Film> mapFilmList(JSONObject response) {
 
         ArrayList<Film> result = new ArrayList<>();
-        try{
+        try {
             JSONArray jsonArray = response.getJSONArray(RESULT);
 
-            for(int i = 0; i < jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonProduct = jsonArray.getJSONObject(i);
 
                 Film f = new Film();
@@ -39,7 +38,7 @@ public class FilmMapper {
 
                 result.add(f);
             }
-        } catch( JSONException ex) {
+        } catch (JSONException ex) {
             Log.e("FilmMapper", "mapFilmList JSONException " + ex.getLocalizedMessage());
         }
         return result;

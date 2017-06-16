@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.auth0.android.jwt.Claim;
+import com.auth0.android.jwt.JWT;
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.volley.LoginActivityRequests;
 
@@ -21,6 +23,9 @@ import org.json.JSONObject;
 
 public class LoginRegisterActivity extends AppCompatActivity implements LoginActivityRequests.LoginActivityListener, View.OnClickListener {
 
+    private SharedPreferences prefs;
+
+    private static final String CUSTOMER_ID = "customer_id";
     private final String tag = getClass().getSimpleName();
 
     private LoginActivityRequests request;
@@ -29,6 +34,14 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
+
+        Context context = getApplicationContext();
+        prefs = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        if (jwtAvailable()) {
+            login();
+        }
 
         request = new LoginActivityRequests(this, this);
         Button bSignIn = (Button) findViewById(R.id.bSignIn);
@@ -41,19 +54,16 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginAct
     public void onSuccessfulLogin(JSONObject response) {
         Toast.makeText(this, "Signed in", Toast.LENGTH_SHORT).show();
         try {
-            String token = response.getString(getString(R.string.token));
+            String token = response.getString(getString(R.string.jwt));
+            JWT jwt = new JWT(token);
+            Claim customerId = jwt.getClaim(CUSTOMER_ID);
+            Log.i(tag, "customer.asInt(): " + customerId.asInt());
 
-            Context context = getApplicationContext();
-            SharedPreferences prefs = context.getSharedPreferences(
-                    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString(getString(R.string.token), token);
+            editor.putString(getString(R.string.jwt), token);
+            editor.putInt(getString(R.string.customer_id), customerId.asInt());
             editor.apply();
-
-            Intent intent = new Intent(context, FilmsActivity.class);
-            startActivity(intent);
-
-            finish();
+            login();
         } catch (JSONException e) {
             Log.e(tag, e.getMessage());
         }
@@ -92,8 +102,8 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginAct
         String password = etPassword.getText().toString();
 
         switch (v.getId()) {
-            case R.id.bSignIn :
-                if(isValidEmail(etEmail.getText().toString())) {
+            case R.id.bSignIn:
+                if (isValidEmail(etEmail.getText().toString())) {
                     request.handleLogin(email, password);
                 } else {
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show();
@@ -109,5 +119,20 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginAct
 
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    private boolean jwtAvailable() {
+        boolean result = false;
+        String token = prefs.getString(getString(R.string.jwt), null);
+        if (token != null) {
+            result = true;
+        }
+        return result;
+    }
+
+    public void login() {
+        Intent intent = new Intent(getApplicationContext(), FilmsActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

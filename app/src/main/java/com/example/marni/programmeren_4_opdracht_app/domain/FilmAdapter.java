@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
@@ -13,17 +15,20 @@ import com.example.marni.programmeren_4_opdracht_app.R;
 import java.util.ArrayList;
 
 public class FilmAdapter extends BaseAdapter {
-	
+
+	private static final int COUNT = 10;
 	private final String tag = this.getClass().getSimpleName();
-	
+
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private ArrayList<Film> films;
-	
-	public FilmAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Film> films) {
+	private OnLoadMoreItems listener;
+
+	public FilmAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Film> films, OnLoadMoreItems listener) {
 		this.mContext = context;
 		this.mInflater = layoutInflater;
 		this.films = films;
+		this.listener = listener;
 	}
 	
 	@Override
@@ -49,14 +54,16 @@ public class FilmAdapter extends BaseAdapter {
 		if(convertView == null){
 			
 			Log.i(tag, "convertView is NULL - nieuwe maken");
-			convertView = mInflater.inflate(R.layout.film_listview_row, null);
+			convertView = mInflater.inflate(R.layout.film_list_view_row, null);
 
 			viewHolder = new ViewHolder();
 			viewHolder.textViewFilmId = (TextView) convertView.findViewById(R.id.tvFilmId);
 			viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.tvFilmTitle);
 			viewHolder.textViewReleaseYear = (TextView) convertView.findViewById(R.id.tvFilmReleaseYear);
 			viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.tvFilmDescription);
-			
+			viewHolder.bLoadMoreItems = (Button) convertView.findViewById(R.id.bLoadMoreItems);
+			viewHolder.rlFilm = (RelativeLayout) convertView.findViewById(R.id.rlFilm);
+
 			convertView.setTag(viewHolder);
 		} else {
 			Log.i(tag, "convertView BESTOND AL - hergebruik");
@@ -74,14 +81,36 @@ public class FilmAdapter extends BaseAdapter {
 		viewHolder.textViewTitle.setText(title);
 		viewHolder.textViewReleaseYear.setText(releaseYear);
 		viewHolder.textViewDescription.setText(description);
-		
+		viewHolder.bLoadMoreItems.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				listener.loadMoreItems(getCount(), COUNT);
+			}
+		});
+		if(reachedEndOfList(position)) {
+			viewHolder.bLoadMoreItems.setVisibility(View.VISIBLE);
+			viewHolder.rlFilm.setBackgroundResource(R.drawable.shadow_drawable);
+		} else {
+			viewHolder.bLoadMoreItems.setVisibility(View.GONE);
+			viewHolder.rlFilm.setBackgroundResource(0);
+		}
 		return convertView;
 	}
-	
+
+	private boolean reachedEndOfList(int position) {
+		return position == getCount() - 1;
+	}
+
 	private static class ViewHolder {
 		TextView textViewFilmId;
 		TextView textViewTitle;
 		TextView textViewReleaseYear;
 		TextView textViewDescription;
+		Button bLoadMoreItems;
+		RelativeLayout rlFilm;
+	}
+
+	public interface OnLoadMoreItems {
+		void loadMoreItems(int offset, int count);
 	}
 }

@@ -1,17 +1,20 @@
 package com.example.marni.programmeren_4_opdracht_app.volley;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.service.Config;
 import com.example.marni.programmeren_4_opdracht_app.service.VolleyRequestQueue;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,7 +37,7 @@ public class FilmsActivityRequests {
         this.listener = listener;
     }
 
-    public void handleGetFilms(final int offset, final int count) {
+    public void handleGetFilms(int offset, int count) {
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET,
                         Config.URL_FILMS +

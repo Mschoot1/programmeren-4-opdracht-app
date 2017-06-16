@@ -3,4 +3,5 @@
     <dimen name="etMargin">20dp</dimen>
     <dimen name="lvRowPadding">11dp</dimen>
     <dimen name="tvPadding">5dp</dimen>
+    <dimen name="bPadding">10dp</dimen>
 </resources>
