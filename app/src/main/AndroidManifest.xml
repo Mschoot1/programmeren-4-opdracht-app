@@ -27,6 +27,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.FilmsActivity" />
         </activity>
+        <activity android:name=".presentation.HistoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.FilmsActivity" />
+        </activity>
     </application>
 
 </manifest>

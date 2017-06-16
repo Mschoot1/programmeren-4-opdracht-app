@@ -93,6 +93,12 @@ public class FilmsActivity extends AppCompatActivity implements FilmsActivityReq
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.menu_item_history:
+                intent = new Intent(getApplicationContext(), HistoryActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                // empty
         }
         return super.onOptionsItemSelected(item);
     }
