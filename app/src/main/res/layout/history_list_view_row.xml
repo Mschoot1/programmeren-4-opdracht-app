@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rlInventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/lvRowPadding">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bRent"
+        android:layout_alignBottom="@+id/bRent"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/bRent">
+
+        <TextView
+            android:id="@+id/tvHistoryFilmId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="@dimen/tvPadding" />
+
+        <TextView
+            android:id="@+id/tvHistoryFilmTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/tvHistoryFilmId"
+            android:padding="@dimen/tvPadding" />
+
+        <TextView
+            android:id="@+id/tvHistoryInventoryId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHistoryFilmId"
+            android:padding="@dimen/tvPadding" />
+
+        <TextView
+            android:id="@+id/tvHistoryRentalDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHistoryFilmId"
+            android:layout_toEndOf="@+id/tvHistoryInventoryId"
+            android:padding="@dimen/tvPadding" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
