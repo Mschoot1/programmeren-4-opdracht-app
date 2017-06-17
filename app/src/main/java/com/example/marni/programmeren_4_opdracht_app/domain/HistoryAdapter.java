@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.volley.HistoryActivityRequests;
-import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
 
 import java.util.ArrayList;
 
@@ -22,25 +19,25 @@ public class HistoryAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater mInflater;
-	private ArrayList<Inventory> inventories;
+	private ArrayList<Rental> rentals;
 	private HistoryActivityRequests.LoginActivityListener listener;
 
-	public HistoryAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Inventory> inventories, HistoryActivityRequests.LoginActivityListener listener) {
+	public HistoryAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Rental> rentals, HistoryActivityRequests.LoginActivityListener listener) {
 		this.mContext = context;
 		this.mInflater = layoutInflater;
-		this.inventories = inventories;
+		this.rentals = rentals;
 		this.listener = listener;
 	}
 
 	@Override
 	public int getCount() {
-		return inventories.size();
+		return rentals.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		Log.i(tag, "getItem() at " + position);
-		return inventories.get(position);
+		return rentals.get(position);
 	}
 
 	@Override
@@ -69,9 +66,12 @@ public class HistoryAdapter extends BaseAdapter {
 			viewHolder = (HistoryAdapter.ViewHolder) convertView.getTag();
 		}
 
-		final Inventory inventory = inventories.get(position);
-		String filmId = Integer.toString(inventory.getInventoryId());
-		String rentalDate = inventory.getRentalDate();
+		final Rental rental = rentals.get(position);
+		String filmId = Integer.toString(rental.getInventoryId());
+		String rentalDate = rental.getRentalDate();
+
+		viewHolder.tvHistoryInventoryId.setText(filmId);
+		viewHolder.tvHistoryRentalDate.setText(rentalDate);
 
 		return convertView;
 	}

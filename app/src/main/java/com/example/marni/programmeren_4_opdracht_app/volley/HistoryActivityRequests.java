@@ -42,6 +42,7 @@ public class HistoryActivityRequests {
 				context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 		jwt = prefs.getString(context.getString(R.string.jwt), "");
 		customerId = prefs.getInt(context.getString(R.string.customer_id), 0);
+		setCustomerId(customerId);
 	}
 
 	public void handleGetCustomerRentals(int customerId) {
@@ -52,7 +53,7 @@ public class HistoryActivityRequests {
 						new Response.Listener<JSONObject>() {
 							@Override
 							public void onResponse(JSONObject response) {
-								listener.onSuccessfulGetHistory(response);
+								listener.onSuccessfulCustomerRental(response);
 							}
 						}, new Response.ErrorListener() {
 					@Override
@@ -75,8 +76,15 @@ public class HistoryActivityRequests {
 		VolleyRequestQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
 	}
 
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+		listener.onGetCustomerId(customerId);
+	}
+
 	public interface LoginActivityListener {
-		void onSuccessfulGetHistory(JSONObject response);
+		void onSuccessfulCustomerRental(JSONObject response);
+
+		void onGetCustomerId(int customerId);
 
 		void onGetHistoryError(VolleyError error);
 	}
