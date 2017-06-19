@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 public class Inventory {
 
     private int inventoryId;
+    private String returnDate = "";
     private String rentalDate = "";
 
     public int getInventoryId() {
@@ -21,6 +22,14 @@ public class Inventory {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 
     public enum Status {AVAILABLE, MINE, NOT_AVAILABLE}

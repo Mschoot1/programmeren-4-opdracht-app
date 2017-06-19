@@ -1,4 +1,4 @@
-package com.example.marni.programmeren_4_opdracht_app.domain;
+package com.example.marni.programmeren_4_opdracht_app.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
+import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
+import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
 import java.util.ArrayList;
 
@@ -22,13 +24,15 @@ public class InventoryAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Inventory> inventories;
-    private InventoriesActivityRequests.LoginActivityListener listener;
+    private InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener;
+    private InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener;
 
-    public InventoryAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Inventory> inventories, InventoriesActivityRequests.LoginActivityListener listener) {
+    public InventoryAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Inventory> inventories, InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener, InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener) {
         this.mContext = context;
         this.mInflater = layoutInflater;
         this.inventories = inventories;
-        this.listener = listener;
+        this.inventoryPutRequestListener = inventoryPutRequestListener;
+        this.inventoryActivityRequstsListener = inventoryActivityRequstsListener;
     }
 
     @Override
@@ -76,7 +80,8 @@ public class InventoryAdapter extends BaseAdapter {
         viewHolder.tvInventoryId.setText(filmId);
 
         Log.i(tag, "inventory.getStatus(): " + inventory.getStatus());
-        final InventoriesActivityRequests requests = new InventoriesActivityRequests(mContext, listener);
+        final InventoriesActivityRequests inventoriesActivityRequests = new InventoriesActivityRequests(mContext, inventoryActivityRequstsListener);
+        final InventoryPutRequest inventoryPutRequest = new InventoryPutRequest(mContext, inventoryPutRequestListener);
         switch (inventory.getStatus()) {
             case AVAILABLE:
                 viewHolder.ivNotAvailable.setVisibility(View.INVISIBLE);
@@ -87,7 +92,7 @@ public class InventoryAdapter extends BaseAdapter {
                 viewHolder.bRent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requests.handleRentRental(inventory.getInventoryId());
+                        inventoriesActivityRequests.handleRentRental(inventory.getInventoryId());
                     }
                 });
                 break;
@@ -106,7 +111,7 @@ public class InventoryAdapter extends BaseAdapter {
                 viewHolder.bReturn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requests.handleReturnRental(inventory.getInventoryId());
+                        inventoryPutRequest.handleReturnRental(inventory.getInventoryId());
                     }
                 });
                 break;

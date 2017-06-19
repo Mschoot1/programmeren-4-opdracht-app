@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.domain.Film;
-import com.example.marni.programmeren_4_opdracht_app.domain.FilmAdapter;
-import com.example.marni.programmeren_4_opdracht_app.domain.FilmMapper;
+import com.example.marni.programmeren_4_opdracht_app.adapters.FilmAdapter;
+import com.example.marni.programmeren_4_opdracht_app.mappers.FilmMapper;
 import com.example.marni.programmeren_4_opdracht_app.volley.FilmsActivityRequests;
 
 import org.json.JSONObject;

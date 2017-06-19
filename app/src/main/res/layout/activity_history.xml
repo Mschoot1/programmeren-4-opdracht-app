@@ -12,9 +12,10 @@
         android:layout_height="?attr/actionBarSize" />
 
     <ListView
-        android:id="@+id/lvHistory"
+        android:id="@+id/lvRentals"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar_include" />

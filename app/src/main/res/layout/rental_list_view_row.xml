@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlInventory"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/lvRowPadding">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/bReturn">
+
+        <TextView
+            android:id="@+id/tvRentalFilmTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="@dimen/tvPadding" />
+
+        <TextView
+            android:id="@+id/tvRentalInventoryId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvRentalFilmTitle"
+            android:padding="@dimen/tvPadding" />
+
+        <TextView
+            android:id="@+id/tvRentalRentalDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvRentalInventoryId"
+            android:layout_alignBottom="@+id/tvRentalInventoryId"
+            android:layout_toEndOf="@+id/tvRentalInventoryId"
+            android:padding="@dimen/tvPadding" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="@string/not_return" />
+
+</RelativeLayout>

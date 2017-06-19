@@ -17,11 +17,12 @@ import com.android.volley.VolleyError;
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.domain.Film;
 import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
-import com.example.marni.programmeren_4_opdracht_app.domain.InventoryAdapter;
-import com.example.marni.programmeren_4_opdracht_app.domain.InventoryMapper;
+import com.example.marni.programmeren_4_opdracht_app.adapters.InventoryAdapter;
+import com.example.marni.programmeren_4_opdracht_app.mappers.InventoryMapper;
 import com.example.marni.programmeren_4_opdracht_app.domain.Rental;
-import com.example.marni.programmeren_4_opdracht_app.domain.RentalMapper;
+import com.example.marni.programmeren_4_opdracht_app.mappers.RentalMapper;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
+import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
 import org.json.JSONObject;
 
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 
 import static com.example.marni.programmeren_4_opdracht_app.presentation.FilmsActivity.FILM;
 
-public class InventoriesActivity extends AppCompatActivity implements InventoriesActivityRequests.LoginActivityListener {
+public class InventoriesActivity extends AppCompatActivity implements InventoriesActivityRequests.InventoryActivityRequstsListener, InventoryPutRequest.InventoryPutRequestListener {
 
     private final String tag = getClass().getSimpleName();
 
@@ -56,7 +57,7 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(film.getTitle());
 
-        adapter = new InventoryAdapter(getApplicationContext(), getLayoutInflater(), inventories, this);
+        adapter = new InventoryAdapter(getApplicationContext(), getLayoutInflater(), inventories, this, this);
         ListView lvInventories = (ListView) findViewById(R.id.lvInventories);
         lvInventories.setAdapter(adapter);
 
@@ -104,9 +105,8 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
     @Override
     public void onSuccessfulGetInventoryRentals(JSONObject response) {
         Log.i(tag, "onSuccessfulGetInventoryRentals: " + response);
-        ArrayList<Rental> rentals = RentalMapper.mapRentalList(response);
-        if (!rentals.isEmpty()) {
-            Rental r = rentals.get(0);
+        Rental r = RentalMapper.mapRental(response);
+        if (r != null) {
             for (Inventory i : inventories) {
                 if (i.getInventoryId() == r.getInventoryId()) {
                     SharedPreferences prefs = getSharedPreferences(

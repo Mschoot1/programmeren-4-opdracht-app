@@ -2,7 +2,6 @@ package com.example.marni.programmeren_4_opdracht_app.volley;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -32,9 +31,9 @@ public class HistoryActivityRequests {
 	private String jwt;
 	private int customerId;
 
-	private LoginActivityListener listener;
+	private HistoryActivityListener listener;
 
-	public HistoryActivityRequests(Context context, LoginActivityListener listener) {
+	public HistoryActivityRequests(Context context, HistoryActivityListener listener) {
 		this.context = context;
 		this.listener = listener;
 
@@ -81,7 +80,7 @@ public class HistoryActivityRequests {
 		listener.onGetCustomerId(customerId);
 	}
 
-	public interface LoginActivityListener {
+	public interface HistoryActivityListener {
 		void onSuccessfulCustomerRental(JSONObject response);
 
 		void onGetCustomerId(int customerId);

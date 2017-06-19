@@ -1,4 +1,4 @@
-package com.example.marni.programmeren_4_opdracht_app.domain;
+package com.example.marni.programmeren_4_opdracht_app.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
+import com.example.marni.programmeren_4_opdracht_app.domain.Film;
 
 import java.util.ArrayList;
 

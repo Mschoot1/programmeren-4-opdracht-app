@@ -1,14 +1,14 @@
-package com.example.marni.programmeren_4_opdracht_app.domain;
+package com.example.marni.programmeren_4_opdracht_app.mappers;
 
 import android.util.Log;
+
+import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import static com.example.marni.programmeren_4_opdracht_app.domain.FilmMapper.RESULT;
 
 public class InventoryMapper {
 
@@ -18,7 +18,7 @@ public class InventoryMapper {
 
         ArrayList<Inventory> result = new ArrayList<>();
         try {
-            JSONArray jsonArray = response.getJSONArray(RESULT);
+            JSONArray jsonArray = response.getJSONArray(FilmMapper.RESULT);
             for (int j = 0; j < jsonArray.length(); j++) {
                 JSONObject jsonProduct = jsonArray.getJSONObject(j);
 
@@ -28,7 +28,7 @@ public class InventoryMapper {
                 result.add(i);
             }
         } catch (JSONException ex) {
-            Log.e("InventoryMapper", "mapRentalList JSONException " + ex.getLocalizedMessage());
+            Log.e("InventoryMapper", "mapRental JSONException " + ex.getLocalizedMessage());
         }
         return result;
     }

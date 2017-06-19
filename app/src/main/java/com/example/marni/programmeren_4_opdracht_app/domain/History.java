@@ -1,9 +1,5 @@
 package com.example.marni.programmeren_4_opdracht_app.domain;
 
-/**
- * Created by qsl on 17/06/2017.
- */
-
 public class History {
 
 	private int inventoryId;

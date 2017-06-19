@@ -1,6 +1,8 @@
-package com.example.marni.programmeren_4_opdracht_app.domain;
+package com.example.marni.programmeren_4_opdracht_app.mappers;
 
 import android.util.Log;
+
+import com.example.marni.programmeren_4_opdracht_app.domain.Film;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +14,7 @@ public class FilmMapper {
 
     static final String RESULT = "result";
     private static final String FILM_ID = "film_id";
-    private static final String TITLE = "title";
+    public static final String TITLE = "title";
     private static final String RELEASE_YEAR = "release_year";
     private static final String DESCRIPTION = "description";
 

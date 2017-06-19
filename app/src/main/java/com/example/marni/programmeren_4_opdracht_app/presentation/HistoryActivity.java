@@ -1,6 +1,5 @@
 package com.example.marni.programmeren_4_opdracht_app.presentation;
 
-import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,27 +9,26 @@ import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.example.marni.programmeren_4_opdracht_app.R;
-import com.example.marni.programmeren_4_opdracht_app.domain.Film;
-import com.example.marni.programmeren_4_opdracht_app.domain.HistoryAdapter;
-import com.example.marni.programmeren_4_opdracht_app.domain.HistoryMapper;
+import com.example.marni.programmeren_4_opdracht_app.adapters.RentalAdapter;
+import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
 import com.example.marni.programmeren_4_opdracht_app.domain.Rental;
-import com.example.marni.programmeren_4_opdracht_app.volley.FilmsActivityRequests;
+import com.example.marni.programmeren_4_opdracht_app.mappers.RentalMapper;
 import com.example.marni.programmeren_4_opdracht_app.volley.HistoryActivityRequests;
+import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HistoryActivity extends AppCompatActivity implements HistoryActivityRequests.LoginActivityListener {
+public class HistoryActivity extends AppCompatActivity implements
+        HistoryActivityRequests.HistoryActivityListener, InventoryPutRequest.InventoryPutRequestListener {
 
     private final String tag = getClass().getSimpleName();
 
-    private ArrayList<Rental> history = new ArrayList<>();
+    private ArrayList<Rental> rentals = new ArrayList<>();
 
-    private HistoryAdapter adapter;
+    private RentalAdapter adapter;
     private int CUSTOMER_ID;
-
-    private HistoryActivityRequests requests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +41,20 @@ public class HistoryActivity extends AppCompatActivity implements HistoryActivit
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.close_white);
         ab.setTitle("History");
-        requests = new HistoryActivityRequests(getApplicationContext(), this);
+        HistoryActivityRequests requests = new HistoryActivityRequests(getApplicationContext(), this);
         requests.handleGetCustomerRentals(CUSTOMER_ID);
         Log.i("tag", "Dit is getal" + CUSTOMER_ID);
 
-        adapter = new HistoryAdapter(getApplicationContext(), getLayoutInflater(), history, this);
-        ListView lvHistory = (ListView) findViewById(R.id.lvHistory);
+        adapter = new RentalAdapter(getApplicationContext(), getLayoutInflater(), rentals, this);
+        ListView lvHistory = (ListView) findViewById(R.id.lvRentals);
         lvHistory.setAdapter(adapter);
     }
 
     @Override
     public void onSuccessfulCustomerRental(JSONObject response) {
         Log.i(tag, "onSuccessfulCustomerRental: " + response);
-        for( Rental r : HistoryMapper.mapHistoryList(response)) {
-            history.add(r);
+        for( Rental r : RentalMapper.mapRentalList(response)) {
+            rentals.add(r);
             adapter.notifyDataSetChanged();
         }
     }
@@ -70,5 +68,20 @@ public class HistoryActivity extends AppCompatActivity implements HistoryActivit
     @Override
     public void onGetHistoryError(VolleyError error) {
         Log.e(tag, "onGetHistoryError: " + error.getLocalizedMessage());
+    }
+
+    @Override
+    public void onSuccessfulReturnRental(Inventory i) {
+        for (Rental r : rentals) {
+            if (r.getInventoryId() == i.getInventoryId()) {
+                r.setReturnDate(i.getReturnDate());
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onReturnRentalError(VolleyError error) {
+        Log.e(tag, "onReturnRentalError: " + error.getLocalizedMessage());
     }
 }
