@@ -3,21 +3,16 @@ package com.example.marni.programmeren_4_opdracht_app.volley;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.example.marni.programmeren_4_opdracht_app.service.Config;
 import com.example.marni.programmeren_4_opdracht_app.service.VolleyRequestQueue;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivityRequests {
     private Context context;
@@ -95,7 +90,7 @@ public class LoginActivityRequests {
         // Access the RequestQueue through your singleton class.
         VolleyRequestQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("LoginActivityRequests", "handleRegister JSONException " + e.getLocalizedMessage());
         }
     }
 

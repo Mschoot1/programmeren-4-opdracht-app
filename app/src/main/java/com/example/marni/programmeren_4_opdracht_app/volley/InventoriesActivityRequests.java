@@ -129,7 +129,7 @@ public class InventoriesActivityRequests {
                                 try {
                                     i.setInventoryId(response.getInt(INVENTORY_ID));
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.e("IAR", "handleRentRental JSONException " + e.getLocalizedMessage());
                                 }
                                 listener.onSuccessfulRentRental(i);
                             }

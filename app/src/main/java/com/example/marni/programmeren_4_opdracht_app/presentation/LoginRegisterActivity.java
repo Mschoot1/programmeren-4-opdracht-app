@@ -35,6 +35,8 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginAct
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
 
+        System.setProperty("app.ip", "10.0.2.2");
+
         Context context = getApplicationContext();
         prefs = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);

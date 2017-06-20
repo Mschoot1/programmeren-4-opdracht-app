@@ -104,7 +104,7 @@ public class InventoryAdapter extends BaseAdapter {
                 viewHolder.bRent.setEnabled(false);
                 break;
             case MINE:
-                viewHolder.ivNotAvailable.setVisibility(View.VISIBLE);
+                viewHolder.ivNotAvailable.setVisibility(View.INVISIBLE);
                 viewHolder.tvRentalDate.setVisibility(View.VISIBLE);
                 viewHolder.bRent.setVisibility(View.INVISIBLE);
                 viewHolder.bReturn.setVisibility(View.VISIBLE);
