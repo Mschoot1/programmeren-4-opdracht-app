@@ -1,6 +1,5 @@
 package com.example.marni.programmeren_4_opdracht_app.adapters;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

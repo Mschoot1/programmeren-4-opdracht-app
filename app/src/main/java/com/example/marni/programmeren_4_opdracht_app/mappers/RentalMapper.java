@@ -19,7 +19,7 @@ import static com.example.marni.programmeren_4_opdracht_app.mappers.FilmMapper.T
 
 public class RentalMapper {
 
-    private static final String tag = "RentalMapper";
+    private static final String TAG = "RentalMapper";
 
     private static final String RENTAL_DATE = "rental_date";
     private static final String CUSTOMER_ID = "customer_id";
@@ -44,9 +44,9 @@ public class RentalMapper {
             r.setCustomerId(customerId);
             return r;
         } catch (JSONException ex) {
-            Log.e(tag, "mapRental JSONException " + ex.getLocalizedMessage());
+            Log.e(TAG, "mapRental JSONException " + ex.getLocalizedMessage());
         } catch (ParseException e) {
-            Log.e(tag, "mapRental ParseException " + e.getLocalizedMessage());
+            Log.e(TAG, "mapRental ParseException " + e.getLocalizedMessage());
         }
         return null;
     }
@@ -77,9 +77,9 @@ public class RentalMapper {
                 rentals.add(r);
             }
         } catch (JSONException ex) {
-            Log.e(tag, "mapRentalList JSONException " + ex.getLocalizedMessage());
+            Log.e(TAG, "mapRentalList JSONException " + ex.getLocalizedMessage());
         } catch (ParseException e) {
-            Log.e(tag, "mapRental ParseException " + e.getLocalizedMessage());
+            Log.e(TAG, "mapRental ParseException " + e.getLocalizedMessage());
         }
         return rentals;
     }
