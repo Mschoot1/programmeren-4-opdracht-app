@@ -30,7 +30,6 @@ public class InventoryPutRequest {
     private final String tag = this.getClass().getSimpleName();
 
     private String jwt;
-    private int customerId;
 
     private InventoryPutRequest.InventoryPutRequestListener listener;
 
@@ -47,7 +46,6 @@ public class InventoryPutRequest {
         SharedPreferences prefs = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         jwt = prefs.getString(context.getString(R.string.jwt), "");
-        customerId = prefs.getInt(context.getString(R.string.customer_id), 0);
     }
 
     public void handleReturnRental(int inventory) {

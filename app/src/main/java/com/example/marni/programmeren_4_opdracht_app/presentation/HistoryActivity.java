@@ -28,7 +28,7 @@ public class HistoryActivity extends AppCompatActivity implements
     private ArrayList<Rental> rentals = new ArrayList<>();
 
     private RentalAdapter adapter;
-    private int CUSTOMER_ID;
+    private static int CUSTOMER_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class HistoryActivity extends AppCompatActivity implements
     @Override
     public void onGetCustomerId(int customerId) {
         Log.i(tag, "onGetCustomerRental: " + customerId);
-        this.CUSTOMER_ID = customerId;
+        CUSTOMER_ID = customerId;
     }
 
     @Override

@@ -116,7 +116,7 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
                     } else {
                         i.setStatus(Inventory.Status.NOT_AVAILABLE);
                     }
-                    i.setAvailable(!(i.getInventoryId() == r.getInventoryId()));
+                    i.setAvailable((i.getInventoryId() != r.getInventoryId()));
                     i.setRentalDate(r.getRentalDate());
 
                     Log.i(tag, "r.getCustomerId(): " + r.getCustomerId());
@@ -124,8 +124,6 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
                     Log.i(tag, "i.getStatus(): " + i.getStatus());
                 }
             }
-        } else {
-//            inventories.get(j).setStatus(Inventory.Status.AVAILABLE);
         }
         j++;
         if (j == inventories.size()) {
