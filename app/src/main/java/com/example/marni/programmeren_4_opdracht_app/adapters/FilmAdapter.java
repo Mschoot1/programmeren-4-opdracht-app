@@ -24,7 +24,7 @@ public class FilmAdapter extends BaseAdapter {
 	private List<Film> films;
 	private OnLoadMoreItems listener;
 
-	public FilmAdapter(Context context, LayoutInflater layoutInflater, List<Film> films, OnLoadMoreItems listener) {
+	public FilmAdapter(LayoutInflater layoutInflater, List<Film> films, OnLoadMoreItems listener) {
 		this.mInflater = layoutInflater;
 		this.films = films;
 		this.listener = listener;

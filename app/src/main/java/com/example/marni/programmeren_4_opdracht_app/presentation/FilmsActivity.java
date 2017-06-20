@@ -53,7 +53,7 @@ public class FilmsActivity extends AppCompatActivity implements FilmsActivityReq
 
         progressBar = (ProgressBar) findViewById(R.id.pb);
 
-        adapter = new FilmAdapter(getApplicationContext(), getLayoutInflater(), films, this);
+        adapter = new FilmAdapter(getLayoutInflater(), films, this);
         final ListView lvFilms = (ListView) findViewById(R.id.lvFilms);
         lvFilms.setAdapter(adapter);
         lvFilms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
