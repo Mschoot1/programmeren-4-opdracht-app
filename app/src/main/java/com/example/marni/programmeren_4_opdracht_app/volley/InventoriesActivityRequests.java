@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.marni.programmeren_4_opdracht_app.mappers.InventoryMapper.INVENTORY_ID;
+import static com.example.marni.programmeren_4_opdracht_app.service.Config.HEADERS;
 
 public class InventoriesActivityRequests {
 
@@ -70,7 +71,7 @@ public class InventoriesActivityRequests {
                 Map<String, String> headers = new HashMap<>();
                 headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
+                Log.i(tag, HEADERS + headers.toString());
                 return headers;
             }
         };
@@ -104,7 +105,7 @@ public class InventoriesActivityRequests {
                 Map<String, String> headers = new HashMap<>();
                 headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
+                Log.i(tag, HEADERS + headers.toString());
                 return headers;
             }
         };
@@ -129,7 +130,7 @@ public class InventoriesActivityRequests {
                                 try {
                                     i.setInventoryId(response.getInt(INVENTORY_ID));
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.e("IAR", "handleRentRental JSONException " + e.getLocalizedMessage());
                                 }
                                 listener.onSuccessfulRentRental(i);
                             }
@@ -144,7 +145,7 @@ public class InventoriesActivityRequests {
                 Map<String, String> headers = new HashMap<>();
                 headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
+                Log.i(tag, HEADERS + headers.toString());
                 return headers;
             }
         };

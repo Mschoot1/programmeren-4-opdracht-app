@@ -42,7 +42,7 @@ public class RentalMapper {
         } catch (JSONException ex) {
             Log.e("RentalMapper", "mapRental JSONException " + ex.getLocalizedMessage());
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("RentalMapper", "mapRental ParseException " + e.getLocalizedMessage());
         }
         return null;
     }
@@ -75,7 +75,7 @@ public class RentalMapper {
         } catch (JSONException ex) {
             Log.e("RentalMapper", "mapRentalList JSONException " + ex.getLocalizedMessage());
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("RentalMapper", "mapRental ParseException " + e.getLocalizedMessage());
         }
         return rentals;
     }

@@ -60,6 +60,7 @@ public class HistoryActivityRequests {
 						listener.onGetHistoryError(error);
 					}
 				}) {
+			@Override
 			public Map<String, String> getHeaders() throws AuthFailureError {
 				Map<String, String> headers = new HashMap<>();
 				headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);

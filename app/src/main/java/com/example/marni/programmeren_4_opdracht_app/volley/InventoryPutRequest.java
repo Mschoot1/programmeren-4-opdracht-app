@@ -61,7 +61,7 @@ public class InventoryPutRequest {
                                     i.setInventoryId(response.getInt(INVENTORY_ID));
                                     i.setReturnDate(response.getString(RETURN_DATE));
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.e("InventoryPutRequest", "handleReturnRental JSONException " + e.getLocalizedMessage());
                                 }
                                 listener.onSuccessfulReturnRental(i);
                             }
@@ -74,7 +74,8 @@ public class InventoryPutRequest {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
+                headers.put(Config
+                        .CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
                 Log.i(tag, "headers: " + headers.toString());
                 return headers;
