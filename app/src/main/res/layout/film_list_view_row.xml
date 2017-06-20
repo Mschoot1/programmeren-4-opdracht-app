@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlFilm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/lvRowPadding">
+
+    <TextView
+        android:id="@+id/tvFilmId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/tvPadding" />
+
+    <TextView
+        android:id="@+id/tvFilmTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tvFilmId"
+        android:padding="@dimen/tvPadding" />
+
+    <TextView
+        android:id="@+id/tvFilmReleaseYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tvFilmTitle"
+        android:padding="@dimen/tvPadding" />
+
+    <TextView
+        android:id="@+id/tvFilmDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvFilmId"
+        android:padding="@dimen/tvPadding" />
+
+    <Button
+        android:id="@+id/bLoadMoreItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/bPadding"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="@string/load_more_items" />
+
+</RelativeLayout>
