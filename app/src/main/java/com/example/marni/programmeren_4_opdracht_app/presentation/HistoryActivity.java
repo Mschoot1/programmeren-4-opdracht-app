@@ -28,7 +28,7 @@ public class HistoryActivity extends AppCompatActivity implements
     private ArrayList<Rental> rentals = new ArrayList<>();
 
     private RentalAdapter adapter;
-    private static int CUSTOMER_ID;
+    private int customerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,8 @@ public class HistoryActivity extends AppCompatActivity implements
         ab.setHomeAsUpIndicator(R.drawable.close_white);
         ab.setTitle("History");
         HistoryActivityRequests requests = new HistoryActivityRequests(getApplicationContext(), this);
-        requests.handleGetCustomerRentals(CUSTOMER_ID);
-        Log.i("tag", "Dit is getal" + CUSTOMER_ID);
+        requests.handleGetCustomerRentals(customerId);
+        Log.i("tag", "Dit is getal" + customerId);
 
         adapter = new RentalAdapter(getApplicationContext(), getLayoutInflater(), rentals, this);
         ListView lvHistory = (ListView) findViewById(R.id.lvRentals);
@@ -62,7 +62,7 @@ public class HistoryActivity extends AppCompatActivity implements
     @Override
     public void onGetCustomerId(int customerId) {
         Log.i(tag, "onGetCustomerRental: " + customerId);
-        CUSTOMER_ID = customerId;
+        this.customerId = customerId;
     }
 
     @Override

@@ -15,6 +15,9 @@ public class InventoryMapper {
 
     public static final String INVENTORY_ID = "inventory_id";
 
+    private InventoryMapper() {
+        // Empty constructor
+    }
     public static List<Inventory> mapInventoryList(JSONObject response) {
 
         List<Inventory> result = new ArrayList<>();

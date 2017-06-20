@@ -55,22 +55,23 @@ public class InventoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.i(tag, "getView at " + position);
         ViewHolder viewHolder;
-        if (convertView == null) {
+        View v = convertView;
+        if (v == null) {
 
             Log.i(tag, "convertView is NULL - nieuwe maken");
-            convertView = mInflater.inflate(R.layout.inventory_list_view_row, null);
+            v = mInflater.inflate(R.layout.inventory_list_view_row, null);
 
             viewHolder = new ViewHolder();
-            viewHolder.tvInventoryId = (TextView) convertView.findViewById(R.id.tvInventoryId);
-            viewHolder.ivNotAvailable = (ImageView) convertView.findViewById(R.id.ivNotAvailable);
-            viewHolder.tvRentalDate = (TextView) convertView.findViewById(R.id.tvRentalDate);
-            viewHolder.bRent = (Button) convertView.findViewById(R.id.bRent);
-            viewHolder.bReturn = (Button) convertView.findViewById(R.id.bReturn);
+            viewHolder.tvInventoryId = (TextView) v.findViewById(R.id.tvInventoryId);
+            viewHolder.ivNotAvailable = (ImageView) v.findViewById(R.id.ivNotAvailable);
+            viewHolder.tvRentalDate = (TextView) v.findViewById(R.id.tvRentalDate);
+            viewHolder.bRent = (Button) v.findViewById(R.id.bRent);
+            viewHolder.bReturn = (Button) v.findViewById(R.id.bReturn);
 
-            convertView.setTag(viewHolder);
+            v.setTag(viewHolder);
         } else {
             Log.i(tag, "convertView BESTOND AL - hergebruik");
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) v.getTag();
         }
 
         final Inventory inventory = inventories.get(position);
@@ -120,7 +121,7 @@ public class InventoryAdapter extends BaseAdapter {
         }
         viewHolder.tvRentalDate.setText(rentalDate);
 
-        return convertView;
+        return v;
     }
 
     private static class ViewHolder {

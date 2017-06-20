@@ -41,7 +41,6 @@ public class History {
 
 	public enum Status {AVAILABLE, MINE, NOT_AVAILABLE}
 	private Inventory.Status status = Inventory.Status.AVAILABLE;
-	private boolean available = true;
 	private boolean mine = false;
 
 	public String getRentalDate() {

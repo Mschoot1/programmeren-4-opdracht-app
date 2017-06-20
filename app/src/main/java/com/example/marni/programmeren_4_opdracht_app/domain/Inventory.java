@@ -1,7 +1,5 @@
 package com.example.marni.programmeren_4_opdracht_app.domain;
 
-import org.joda.time.DateTime;
-
 public class Inventory {
 
     private int inventoryId;

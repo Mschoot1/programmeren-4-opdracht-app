@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 public class LoginActivityRequests {
     private Context context;
-    private final String tag = this.getClass().getSimpleName();
 
     private LoginActivityListener listener;
 

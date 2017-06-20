@@ -51,21 +51,22 @@ public class RentalAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.i(tag, "getView at " + position);
         RentalAdapter.ViewHolder viewHolder;
-        if (convertView == null) {
+        View v = convertView;
+        if (v == null) {
 
             Log.i(tag, "convertView is NULL - nieuwe maken");
-            convertView = mInflater.inflate(R.layout.rental_list_view_row, null);
+            v = mInflater.inflate(R.layout.rental_list_view_row, null);
 
             viewHolder = new RentalAdapter.ViewHolder();
-            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvRentalFilmTitle);
-            viewHolder.tvInventoryId = (TextView) convertView.findViewById(R.id.tvRentalInventoryId);
-            viewHolder.tvRentalDate = (TextView) convertView.findViewById(R.id.tvRentalRentalDate);
-            viewHolder.bReturn = (Button) convertView.findViewById(R.id.bReturn);
+            viewHolder.tvTitle = (TextView) v.findViewById(R.id.tvRentalFilmTitle);
+            viewHolder.tvInventoryId = (TextView) v.findViewById(R.id.tvRentalInventoryId);
+            viewHolder.tvRentalDate = (TextView) v.findViewById(R.id.tvRentalRentalDate);
+            viewHolder.bReturn = (Button) v.findViewById(R.id.bReturn);
 
-            convertView.setTag(viewHolder);
+            v.setTag(viewHolder);
         } else {
             Log.i(tag, "convertView BESTOND AL - hergebruik");
-            viewHolder = (RentalAdapter.ViewHolder) convertView.getTag();
+            viewHolder = (RentalAdapter.ViewHolder) v.getTag();
         }
         final Rental r = rentals.get(position);
         String title = r.getTitle();
@@ -87,8 +88,7 @@ public class RentalAdapter extends BaseAdapter {
         } else {
             viewHolder.bReturn.setVisibility(View.INVISIBLE);
         }
-
-        return convertView;
+        return v;
     }
 
     private static class ViewHolder {

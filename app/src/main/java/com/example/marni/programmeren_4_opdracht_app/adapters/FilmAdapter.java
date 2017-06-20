@@ -20,13 +20,11 @@ public class FilmAdapter extends BaseAdapter {
 	private static final int COUNT = 10;
 	private final String tag = this.getClass().getSimpleName();
 
-	private Context mContext;
 	private LayoutInflater mInflater;
 	private List<Film> films;
 	private OnLoadMoreItems listener;
 
 	public FilmAdapter(Context context, LayoutInflater layoutInflater, List<Film> films, OnLoadMoreItems listener) {
-		this.mContext = context;
 		this.mInflater = layoutInflater;
 		this.films = films;
 		this.listener = listener;
@@ -52,23 +50,25 @@ public class FilmAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Log.i(tag, "getView at " + position);
 		ViewHolder viewHolder;
-		if(convertView == null){
+
+		View v = convertView;
+		if(v == null){
 			
 			Log.i(tag, "convertView is NULL - nieuwe maken");
-			convertView = mInflater.inflate(R.layout.film_list_view_row, null);
+			v = mInflater.inflate(R.layout.film_list_view_row, null);
 
 			viewHolder = new ViewHolder();
-			viewHolder.textViewFilmId = (TextView) convertView.findViewById(R.id.tvFilmId);
-			viewHolder.textViewTitle = (TextView) convertView.findViewById(R.id.tvFilmTitle);
-			viewHolder.textViewReleaseYear = (TextView) convertView.findViewById(R.id.tvFilmReleaseYear);
-			viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.tvFilmDescription);
-			viewHolder.bLoadMoreItems = (Button) convertView.findViewById(R.id.bLoadMoreItems);
-			viewHolder.rlFilm = (RelativeLayout) convertView.findViewById(R.id.rlFilm);
+			viewHolder.textViewFilmId = (TextView) v.findViewById(R.id.tvFilmId);
+			viewHolder.textViewTitle = (TextView) v.findViewById(R.id.tvFilmTitle);
+			viewHolder.textViewReleaseYear = (TextView) v.findViewById(R.id.tvFilmReleaseYear);
+			viewHolder.textViewDescription = (TextView) v.findViewById(R.id.tvFilmDescription);
+			viewHolder.bLoadMoreItems = (Button) v.findViewById(R.id.bLoadMoreItems);
+			viewHolder.rlFilm = (RelativeLayout) v.findViewById(R.id.rlFilm);
 
-			convertView.setTag(viewHolder);
+			v.setTag(viewHolder);
 		} else {
 			Log.i(tag, "convertView BESTOND AL - hergebruik");
-			viewHolder = (ViewHolder) convertView.getTag();
+			viewHolder = (ViewHolder) v.getTag();
 		}
 		
 		Film film = films.get(position);
@@ -95,7 +95,7 @@ public class FilmAdapter extends BaseAdapter {
 			viewHolder.bLoadMoreItems.setVisibility(View.GONE);
 			viewHolder.rlFilm.setBackgroundResource(0);
 		}
-		return convertView;
+		return v;
 	}
 
 	private boolean reachedEndOfList(int position) {

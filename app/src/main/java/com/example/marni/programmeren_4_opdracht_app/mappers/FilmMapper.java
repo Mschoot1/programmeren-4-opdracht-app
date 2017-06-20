@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FilmMapper {
 
@@ -18,7 +19,11 @@ public class FilmMapper {
     private static final String RELEASE_YEAR = "release_year";
     private static final String DESCRIPTION = "description";
 
-    public static ArrayList<Film> mapFilmList(JSONObject response) {
+    private FilmMapper() {
+        // Empty constructor
+    }
+
+    public static List<Film> mapFilmList(JSONObject response) {
 
         ArrayList<Film> result = new ArrayList<>();
         try {

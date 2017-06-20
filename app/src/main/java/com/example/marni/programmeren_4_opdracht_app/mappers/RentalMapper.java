@@ -25,6 +25,10 @@ public class RentalMapper {
     private static final String CUSTOMER_ID = "customer_id";
     public static final String RETURN_DATE = "return_date";
 
+    private RentalMapper() {
+        // Empty constructor
+    }
+
     public static Rental mapRental(JSONObject response) {
         try {
             JSONArray jsonArray = response.getJSONArray(FilmMapper.RESULT);
