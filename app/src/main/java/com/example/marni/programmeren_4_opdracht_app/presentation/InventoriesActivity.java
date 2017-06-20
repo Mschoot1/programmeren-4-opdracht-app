@@ -27,6 +27,7 @@ import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.marni.programmeren_4_opdracht_app.presentation.FilmsActivity.FILM;
 
@@ -82,7 +83,7 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
     @Override
     public void onSuccessfulGetInventories(JSONObject response) {
         Log.i(tag, "onSuccessfulGetInventories: " + response);
-        ArrayList<Inventory> al = InventoryMapper.mapInventoryList(response);
+        List<Inventory> al = InventoryMapper.mapInventoryList(response);
         for (Inventory i : al) {
             inventories.add(i);
             requests.handleGetInventoryRentals(i.getInventoryId());

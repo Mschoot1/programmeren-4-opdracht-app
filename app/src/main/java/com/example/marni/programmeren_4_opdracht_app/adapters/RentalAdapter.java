@@ -11,11 +11,9 @@ import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.domain.Rental;
-import com.example.marni.programmeren_4_opdracht_app.volley.HistoryActivityRequests;
-import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RentalAdapter extends BaseAdapter {
 
@@ -23,10 +21,10 @@ public class RentalAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<Rental> rentals;
+    private List<Rental> rentals;
     private InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener;
 
-    public RentalAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Rental> rentals, InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener) {
+    public RentalAdapter(Context context, LayoutInflater layoutInflater, List<Rental> rentals, InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener) {
         this.mContext = context;
         this.mInflater = layoutInflater;
         this.rentals = rentals;

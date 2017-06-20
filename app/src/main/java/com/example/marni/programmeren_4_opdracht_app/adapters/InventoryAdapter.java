@@ -15,7 +15,7 @@ import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryAdapter extends BaseAdapter {
 
@@ -23,11 +23,11 @@ public class InventoryAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<Inventory> inventories;
+    private List<Inventory> inventories;
     private InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener;
     private InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener;
 
-    public InventoryAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Inventory> inventories, InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener, InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener) {
+    public InventoryAdapter(Context context, LayoutInflater layoutInflater, List<Inventory> inventories, InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener, InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener) {
         this.mContext = context;
         this.mInflater = layoutInflater;
         this.inventories = inventories;

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.domain.Film;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FilmAdapter extends BaseAdapter {
 
@@ -22,10 +22,10 @@ public class FilmAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater mInflater;
-	private ArrayList<Film> films;
+	private List<Film> films;
 	private OnLoadMoreItems listener;
 
-	public FilmAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Film> films, OnLoadMoreItems listener) {
+	public FilmAdapter(Context context, LayoutInflater layoutInflater, List<Film> films, OnLoadMoreItems listener) {
 		this.mContext = context;
 		this.mInflater = layoutInflater;
 		this.films = films;

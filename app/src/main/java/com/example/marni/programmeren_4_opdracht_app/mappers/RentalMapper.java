@@ -12,11 +12,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import static com.example.marni.programmeren_4_opdracht_app.mappers.FilmMapper.TITLE;
 
 public class RentalMapper {
+
+    private final String RENTAL_MAPPER = "RentalMapper";
 
     private static final String RENTAL_DATE = "rental_date";
     private static final String CUSTOMER_ID = "customer_id";
@@ -44,8 +47,8 @@ public class RentalMapper {
         return null;
     }
 
-    public static ArrayList<Rental> mapRentalList(JSONObject response) {
-        ArrayList<Rental> rentals = new ArrayList<>();
+    public static List<Rental> mapRentalList(JSONObject response) {
+        List<Rental> rentals = new ArrayList<>();
         try {
             JSONArray jsonArray = response.getJSONArray(FilmMapper.RESULT);
             for (int i = 0; i < jsonArray.length(); i++) {

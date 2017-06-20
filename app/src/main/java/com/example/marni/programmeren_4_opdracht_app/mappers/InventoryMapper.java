@@ -9,14 +9,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryMapper {
 
     public static final String INVENTORY_ID = "inventory_id";
 
-    public static ArrayList<Inventory> mapInventoryList(JSONObject response) {
+    public static List<Inventory> mapInventoryList(JSONObject response) {
 
-        ArrayList<Inventory> result = new ArrayList<>();
+        List<Inventory> result = new ArrayList<>();
         try {
             JSONArray jsonArray = response.getJSONArray(FilmMapper.RESULT);
             for (int j = 0; j < jsonArray.length(); j++) {
