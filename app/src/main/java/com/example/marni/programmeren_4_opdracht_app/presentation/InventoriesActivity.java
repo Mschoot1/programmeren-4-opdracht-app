@@ -17,19 +17,21 @@ import com.android.volley.VolleyError;
 import com.example.marni.programmeren_4_opdracht_app.R;
 import com.example.marni.programmeren_4_opdracht_app.domain.Film;
 import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
-import com.example.marni.programmeren_4_opdracht_app.domain.InventoryAdapter;
-import com.example.marni.programmeren_4_opdracht_app.domain.InventoryMapper;
+import com.example.marni.programmeren_4_opdracht_app.adapters.InventoryAdapter;
+import com.example.marni.programmeren_4_opdracht_app.mappers.InventoryMapper;
 import com.example.marni.programmeren_4_opdracht_app.domain.Rental;
-import com.example.marni.programmeren_4_opdracht_app.domain.RentalMapper;
+import com.example.marni.programmeren_4_opdracht_app.mappers.RentalMapper;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
+import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.marni.programmeren_4_opdracht_app.presentation.FilmsActivity.FILM;
 
-public class InventoriesActivity extends AppCompatActivity implements InventoriesActivityRequests.LoginActivityListener {
+public class InventoriesActivity extends AppCompatActivity implements InventoriesActivityRequests.InventoryActivityRequstsListener, InventoryPutRequest.InventoryPutRequestListener {
 
     private final String tag = getClass().getSimpleName();
 
@@ -56,7 +58,7 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(film.getTitle());
 
-        adapter = new InventoryAdapter(getApplicationContext(), getLayoutInflater(), inventories, this);
+        adapter = new InventoryAdapter(getApplicationContext(), getLayoutInflater(), inventories, this, this);
         ListView lvInventories = (ListView) findViewById(R.id.lvInventories);
         lvInventories.setAdapter(adapter);
 
@@ -81,7 +83,7 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
     @Override
     public void onSuccessfulGetInventories(JSONObject response) {
         Log.i(tag, "onSuccessfulGetInventories: " + response);
-        ArrayList<Inventory> al = InventoryMapper.mapInventoryList(response);
+        List<Inventory> al = InventoryMapper.mapInventoryList(response);
         for (Inventory i : al) {
             inventories.add(i);
             requests.handleGetInventoryRentals(i.getInventoryId());
@@ -104,9 +106,8 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
     @Override
     public void onSuccessfulGetInventoryRentals(JSONObject response) {
         Log.i(tag, "onSuccessfulGetInventoryRentals: " + response);
-        ArrayList<Rental> rentals = RentalMapper.mapRentalList(response);
-        if (!rentals.isEmpty()) {
-            Rental r = rentals.get(0);
+        Rental r = RentalMapper.mapRental(response);
+        if (r != null) {
             for (Inventory i : inventories) {
                 if (i.getInventoryId() == r.getInventoryId()) {
                     SharedPreferences prefs = getSharedPreferences(
@@ -116,7 +117,7 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
                     } else {
                         i.setStatus(Inventory.Status.NOT_AVAILABLE);
                     }
-                    i.setAvailable(!(i.getInventoryId() == r.getInventoryId()));
+                    i.setAvailable((i.getInventoryId() != r.getInventoryId()));
                     i.setRentalDate(r.getRentalDate());
 
                     Log.i(tag, "r.getCustomerId(): " + r.getCustomerId());
@@ -124,8 +125,6 @@ public class InventoriesActivity extends AppCompatActivity implements Inventorie
                     Log.i(tag, "i.getStatus(): " + i.getStatus());
                 }
             }
-        } else {
-//            inventories.get(j).setStatus(Inventory.Status.AVAILABLE);
         }
         j++;
         if (j == inventories.size()) {

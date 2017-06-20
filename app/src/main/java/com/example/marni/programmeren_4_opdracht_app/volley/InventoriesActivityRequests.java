@@ -21,7 +21,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.marni.programmeren_4_opdracht_app.domain.InventoryMapper.INVENTORY_ID;
+import static com.example.marni.programmeren_4_opdracht_app.mappers.InventoryMapper.INVENTORY_ID;
+import static com.example.marni.programmeren_4_opdracht_app.service.Config.HEADERS;
 
 public class InventoriesActivityRequests {
 
@@ -31,7 +32,7 @@ public class InventoriesActivityRequests {
     private String jwt;
     private int customerId;
 
-    private LoginActivityListener listener;
+    private InventoryActivityRequstsListener listener;
 
     /**
      * Constructor
@@ -39,7 +40,7 @@ public class InventoriesActivityRequests {
      * @param context  a description
      * @param listener a description
      */
-    public InventoriesActivityRequests(Context context, LoginActivityListener listener) {
+    public InventoriesActivityRequests(Context context, InventoryActivityRequstsListener listener) {
         this.context = context;
         this.listener = listener;
 
@@ -70,7 +71,7 @@ public class InventoriesActivityRequests {
                 Map<String, String> headers = new HashMap<>();
                 headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
+                Log.i(tag, HEADERS + headers.toString());
                 return headers;
             }
         };
@@ -104,7 +105,7 @@ public class InventoriesActivityRequests {
                 Map<String, String> headers = new HashMap<>();
                 headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
+                Log.i(tag, HEADERS + headers.toString());
                 return headers;
             }
         };
@@ -129,7 +130,7 @@ public class InventoriesActivityRequests {
                                 try {
                                     i.setInventoryId(response.getInt(INVENTORY_ID));
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.e("IAR", "handleRentRental JSONException " + e.getLocalizedMessage());
                                 }
                                 listener.onSuccessfulRentRental(i);
                             }
@@ -144,7 +145,7 @@ public class InventoriesActivityRequests {
                 Map<String, String> headers = new HashMap<>();
                 headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
                 headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
+                Log.i(tag, HEADERS + headers.toString());
                 return headers;
             }
         };
@@ -157,47 +158,7 @@ public class InventoriesActivityRequests {
         VolleyRequestQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void handleReturnRental(int inventory) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.PUT,
-                        Config.URL_RENTALS + customerId + "/" + inventory,
-                        null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Inventory i = new Inventory();
-                                try {
-                                    i.setInventoryId(response.getInt(INVENTORY_ID));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                listener.onSuccessfulReturnRental(i);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        listener.onReturnRentalError(error);
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put(Config.CONTENT_TYPE, Config.APPLICATION_JSON);
-                headers.put(Config.AUTHORIZATION, Config.BEARER + jwt);
-                Log.i(tag, "headers: " + headers.toString());
-                return headers;
-            }
-        };
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1500, // SOCKET_TIMEOUT_MS,
-                2, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        // Access the RequestQueue through your singleton class.
-        VolleyRequestQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
-    }
-
-    public interface LoginActivityListener {
+    public interface InventoryActivityRequstsListener {
         void onSuccessfulGetInventories(JSONObject response);
 
         void onGetInventoriesError(VolleyError error);
@@ -209,10 +170,6 @@ public class InventoriesActivityRequests {
         void onSuccessfulRentRental(Inventory i);
 
         void onRentRentalError(VolleyError error);
-
-        void onSuccessfulReturnRental(Inventory i);
-
-        void onReturnRentalError(VolleyError error);
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.marni.programmeren_4_opdracht_app.domain;
+package com.example.marni.programmeren_4_opdracht_app.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.marni.programmeren_4_opdracht_app.R;
+import com.example.marni.programmeren_4_opdracht_app.domain.Inventory;
 import com.example.marni.programmeren_4_opdracht_app.volley.InventoriesActivityRequests;
+import com.example.marni.programmeren_4_opdracht_app.volley.InventoryPutRequest;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryAdapter extends BaseAdapter {
 
@@ -21,14 +23,16 @@ public class InventoryAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<Inventory> inventories;
-    private InventoriesActivityRequests.LoginActivityListener listener;
+    private List<Inventory> inventories;
+    private InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener;
+    private InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener;
 
-    public InventoryAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Inventory> inventories, InventoriesActivityRequests.LoginActivityListener listener) {
+    public InventoryAdapter(Context context, LayoutInflater layoutInflater, List<Inventory> inventories, InventoryPutRequest.InventoryPutRequestListener inventoryPutRequestListener, InventoriesActivityRequests.InventoryActivityRequstsListener inventoryActivityRequstsListener) {
         this.mContext = context;
         this.mInflater = layoutInflater;
         this.inventories = inventories;
-        this.listener = listener;
+        this.inventoryPutRequestListener = inventoryPutRequestListener;
+        this.inventoryActivityRequstsListener = inventoryActivityRequstsListener;
     }
 
     @Override
@@ -51,22 +55,23 @@ public class InventoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.i(tag, "getView at " + position);
         ViewHolder viewHolder;
-        if (convertView == null) {
+        View v = convertView;
+        if (v == null) {
 
             Log.i(tag, "convertView is NULL - nieuwe maken");
-            convertView = mInflater.inflate(R.layout.inventory_list_view_row, null);
+            v = mInflater.inflate(R.layout.inventory_list_view_row, null);
 
             viewHolder = new ViewHolder();
-            viewHolder.tvInventoryId = (TextView) convertView.findViewById(R.id.tvInventoryId);
-            viewHolder.ivNotAvailable = (ImageView) convertView.findViewById(R.id.ivNotAvailable);
-            viewHolder.tvRentalDate = (TextView) convertView.findViewById(R.id.tvRentalDate);
-            viewHolder.bRent = (Button) convertView.findViewById(R.id.bRent);
-            viewHolder.bReturn = (Button) convertView.findViewById(R.id.bReturn);
+            viewHolder.tvInventoryId = (TextView) v.findViewById(R.id.tvInventoryId);
+            viewHolder.ivNotAvailable = (ImageView) v.findViewById(R.id.ivNotAvailable);
+            viewHolder.tvRentalDate = (TextView) v.findViewById(R.id.tvRentalDate);
+            viewHolder.bRent = (Button) v.findViewById(R.id.bRent);
+            viewHolder.bReturn = (Button) v.findViewById(R.id.bReturn);
 
-            convertView.setTag(viewHolder);
+            v.setTag(viewHolder);
         } else {
             Log.i(tag, "convertView BESTOND AL - hergebruik");
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) v.getTag();
         }
 
         final Inventory inventory = inventories.get(position);
@@ -76,7 +81,8 @@ public class InventoryAdapter extends BaseAdapter {
         viewHolder.tvInventoryId.setText(filmId);
 
         Log.i(tag, "inventory.getStatus(): " + inventory.getStatus());
-        final InventoriesActivityRequests requests = new InventoriesActivityRequests(mContext, listener);
+        final InventoriesActivityRequests inventoriesActivityRequests = new InventoriesActivityRequests(mContext, inventoryActivityRequstsListener);
+        final InventoryPutRequest inventoryPutRequest = new InventoryPutRequest(mContext, inventoryPutRequestListener);
         switch (inventory.getStatus()) {
             case AVAILABLE:
                 viewHolder.ivNotAvailable.setVisibility(View.INVISIBLE);
@@ -87,7 +93,7 @@ public class InventoryAdapter extends BaseAdapter {
                 viewHolder.bRent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requests.handleRentRental(inventory.getInventoryId());
+                        inventoriesActivityRequests.handleRentRental(inventory.getInventoryId());
                     }
                 });
                 break;
@@ -99,14 +105,14 @@ public class InventoryAdapter extends BaseAdapter {
                 viewHolder.bRent.setEnabled(false);
                 break;
             case MINE:
-                viewHolder.ivNotAvailable.setVisibility(View.VISIBLE);
+                viewHolder.ivNotAvailable.setVisibility(View.INVISIBLE);
                 viewHolder.tvRentalDate.setVisibility(View.VISIBLE);
                 viewHolder.bRent.setVisibility(View.INVISIBLE);
                 viewHolder.bReturn.setVisibility(View.VISIBLE);
                 viewHolder.bReturn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        requests.handleReturnRental(inventory.getInventoryId());
+                        inventoryPutRequest.handleReturnRental(inventory.getInventoryId());
                     }
                 });
                 break;
@@ -115,7 +121,7 @@ public class InventoryAdapter extends BaseAdapter {
         }
         viewHolder.tvRentalDate.setText(rentalDate);
 
-        return convertView;
+        return v;
     }
 
     private static class ViewHolder {
